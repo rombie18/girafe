@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graph id="g" edgedefault="undirected">
+    <vertex id="1">
+        <sensornode name="ESP32" room="P108Y"/>
+    </vertex>
+    <vertex id="2">
+        <sensornode name="Arduino" room="E223"/>
+    </vertex>
+    <vertex id="3">
+        <sensornode name="HappyGecko" room="agora"/>
+    </vertex>
+    <vertex id="4">
+        <sensornode name="STM32" room="aula1"/>
+    </vertex>
+    <vertex id="5">
+        <sensornode name="Arduino" room="aula2"/>
+    </vertex>
+    <vertex id="6">
+        <sensornode name="HappyGecko" room="E117"/>
+    </vertex>
+    <vertex id="7">
+        <sensornode name="centrale" room="E116"/>
+    </vertex>
+    <edge id="1" vertex1="1" vertex2="3"/>
+    <edge id="2" vertex1="3" vertex2="4"/>
+    <edge id="3" vertex1="3" vertex2="5"/>
+    <edge id="4" vertex1="3" vertex2="6"/>
+    <edge id="5" vertex1="3" vertex2="7"/>
+    <edge id="6" vertex1="2" vertex2="6"/>
+    <edge id="7" vertex1="2" vertex2="7"/>
+    <edge id="8" vertex1="6" vertex2="7"/>
+</graph>
