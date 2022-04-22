@@ -4,14 +4,16 @@
 #include <string>
 #include "pugixml.hpp"
 #include <stdexcept> // For throwing errors
+#include "Vertex.h"
 
+/*
 
 // CONSTANTS
 // String definitions: these are necessary for the string.compare() method.
 std::string graph_string ("graph");
 std::string edge_string ("edge");
 std::string vertex_string ("vertex");
-std::string sensornode_string("sensornode");
+std::string sensornode_string("SensorNode");
 
 // Create an empty graph. This is needed due to the if statements that have nothing to do with 'if graph_string'.
 // For example, the 'if edge_string' does not know about graph g.
@@ -67,4 +69,12 @@ int main()
 
     std::cin.get();
     return 0;
+}
+*/
+
+int main(){
+    Vertex V1;
+    V1.setId(67);
+    cout<<V1.getId();
+
 }
