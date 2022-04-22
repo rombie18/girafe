@@ -9,4 +9,4 @@ add_executable(src
         main.cpp
         pugiconfig.hpp
         pugixml.cpp
-        pugixml.hpp)
+        pugixml.hpp graph.cpp)
