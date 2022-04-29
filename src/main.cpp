@@ -6,7 +6,7 @@
 #include <stdexcept> // For throwing errors
 #include "Vertex.h"
 
-/*
+using namespace std;
 
 // CONSTANTS
 // String definitions: these are necessary for the string.compare() method.
@@ -18,7 +18,7 @@ std::string sensornode_string("SensorNode");
 // Create an empty graph. This is needed due to the if statements that have nothing to do with 'if graph_string'.
 // For example, the 'if edge_string' does not know about graph g.
 // TODO, studenten: maak hier nieuwe grafe aan.
-
+Graphe g;
 
 struct simple_walker: pugi::xml_tree_walker
 {
@@ -32,6 +32,8 @@ struct simple_walker: pugi::xml_tree_walker
 
             // TODO, studenten: Maak hier een nieuwe vertex en verwerk deze (ken bv. id toe). Voeg op het einde deze vertex toe aan de grafe.
             // Je kan de id uitlezen met 'node.attribute("id").as_int()'. Analoog kan je bv. vertex1 uitlezen met 'node.attribute("vertex1").as_int()'.
+
+
         }
         else if(edge_string.compare(node.name()) == 0) {
             // If XML node is an edge
@@ -70,7 +72,7 @@ int main()
     std::cin.get();
     return 0;
 }
-*/
+
 
 int main(){
     Vertex V1;
