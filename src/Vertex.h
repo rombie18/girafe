@@ -1,3 +1,7 @@
+//
+// Created by DaanJanssen on 15/04/2022.
+//
+
 #include "SensorNode.h"
 
 #ifndef SRC_VERTEX_H
