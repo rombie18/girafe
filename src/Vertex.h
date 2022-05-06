@@ -16,9 +16,9 @@ class Vertex {
     public:
         Vertex();
         int getId();
-        SensorNode getSensorNode();
         int setId(int);
-        SensorNode setSensorNode(string,string,double,double,double);
+        SensorNode getSensorNode();
+        void setSensorNode(SensorNode);
 
 };
 
@@ -43,12 +43,8 @@ SensorNode Vertex::getSensorNode() {
     return sensornode;
 }
 
-SensorNode Vertex::setSensorNode(string n,string r,double t,double h,double c) {
-    sensornode.name = n;
-    sensornode.room = r;
-    sensornode.temperature = t;
-    sensornode.humidity = h;
-    sensornode.co2 = c;
+void Vertex::setSensorNode(SensorNode sensorNode) {
+    sensornode = sensorNode;
 }
 
 
