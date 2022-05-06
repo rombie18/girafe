@@ -2,22 +2,22 @@
 
 class Edge {
     private:
-    int ID;
+    int id;
     Vertex vertex1;
     Vertex vertex2;
 
     public:
-    int getID();
+    int getId();
     Vertex getVertex1();
     Vertex getVertex2();
 
-    int setID(int);
+    int setId(int);
     Vertex setVertex1(Vertex);
     Vertex setVertex2(Vertex);
 };
 
-int Edge::getID() {
-    return ID;
+int Edge::getId() {
+    return id;
 }
 
 Vertex Edge::getVertex1() {
@@ -28,8 +28,8 @@ Vertex Edge::getVertex2() {
     return vertex2;
 }
 
-int Edge::setID(int Id) {
-    ID = Id;
+int Edge::setId(int id) {
+    id = id;
 }
 
 Vertex Edge::setVertex1(Vertex v1) {

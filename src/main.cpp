@@ -55,27 +55,19 @@ struct simple_walker: pugi::xml_tree_walker
             // TODO, studenten: Maak hier een nieuwe vertex en verwerk deze (ken bv. id toe). Voeg op het einde deze vertex toe aan de grafe.
             // Je kan de id uitlezen met 'node.attribute("id").as_int()'. Analoog kan je bv. vertex1 uitlezen met 'node.attribute("vertex1").as_int()'.
 
-            
+            Edge edge;
+            edge.setId(node.attribute("id").as_int());
 
-            Edge *e1 = new Edge; //Nieuwe edge aangemaakt
-            e1->setId(node.attribute("id").as_int()); //id uilezen
-            list<Vertex<int>*> vertexList = g.getVertices();
-            Vertex<int>* ID_vertex1 = nullptr;
-            for(Vertex<int>* v : vertexList){
-                if(v->getId()==node.attribute("vertex1").as_int()){
-                    ID_vertex1 = v;
-                }
-            }
-            Vertex<int>* ID_vertex2 = nullptr;
-            for(Vertex<int>* v : vertexList){
-                if(v->getId()==node.attribute("vertex2").as_int()){
-                    ID_vertex2 = v;
-                }
-            }
-            e1->setVertex1(ID_vertex1); //Uit de vertexlijst halen we de juiste vertices en voegen we toe aan de edge
-            e1->setVertex2(ID_vertex2);
-            graph.addEdgeToList(e1); //Edge wordt aan lijst toegevoegd
+            SensorNode sensorNode;
+            sensorNode.name = node.attribute("name").as_string();
+            sensorNode.room = node.attribute("room").as_string();
+            sensorNode.temperature = (rand() % 10) + 20;
+            sensorNode.humidity = (rand() % 30) + 40;
+            sensorNode.co2 = (rand() % 800) + 400;
 
+            edge.setSensorNode(sensorNode);
+
+            graph.addEdgeToList(edge);
         }
 
         std::cout << std::endl;
