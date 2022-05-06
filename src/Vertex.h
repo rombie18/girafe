@@ -52,5 +52,4 @@ SensorNode Vertex::setSensorNode(string n,string r,double t,double h,double c) {
 }
 
 
-
 #endif //SRC_VERTEX_H

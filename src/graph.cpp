@@ -2,10 +2,10 @@
 // Created by woutr on 22/04/2022.
 //
 #include <list>
-using namespace std;
+#include "Edge.h"
+#include "Vertex.h"
 
-class Edge {};
-class Vertex {};
+using namespace std;
 
 class Graph {
 private:
@@ -41,17 +41,21 @@ list<Vertex> Graph::getVertices() {
 
 list<Edge> Graph::incidentEdges(Vertex vertex) {
     //TODO
-    return list<Edge>();
 }
 
 list<Vertex> Graph::adjecentVertices(Edge edge) {
-    //TODO
-    return list<Vertex>();
+    list<Vertex> vertices;
+    vertices.push_back(edge.getVertex1());
+    vertices.push_back(edge.getVertex2());
+    return vertices;
 }
 
-bool Graph::areAdjecent(Vertex one, Vertex two) {
-    //TODO
-    return false;
+bool Graph::areAdjecent(Vertex vertexOne, Vertex vertexTwo) {
+    for(Edge e : edgeList) {
+        if (e.getVertex1() == vertexTwo && e.getVertex2() == vertexOne) {
+ç
+        }
+    }
 }
 
 bool Graph::opposite() {

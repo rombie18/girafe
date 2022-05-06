@@ -1,8 +1,5 @@
 #include "Vertex.h"
 
-#ifndef SRC_EDGE_H
-#define SRC_EDGE_H
-
 class Edge {
     private:
     int ID;
@@ -39,8 +36,6 @@ Vertex Edge::setVertex1(Vertex v1) {
     vertex1 = v1;
 }
 
-Vertex Edge::setVertex1(Vertex v2) {
+Vertex Edge::setVertex2(Vertex v2) {
     vertex1 = v2;
 }
-
-#endif //SRC_EDGE_H
