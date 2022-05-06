@@ -17,7 +17,7 @@ public:
     void addEdgeToList(Edge edge);
     list<Edge> getEdges();
     list<Vertex> getVertices();
-    list<Edge> incidentEdges(Vertex vertex);
+    //list<Edge> incidentEdges(Vertex vertex);
     list<Vertex> adjecentVertices(Edge edge);
     bool areAdjecent(Vertex one, Vertex two);
     bool opposite();
@@ -39,9 +39,10 @@ list<Vertex> Graph::getVertices() {
     return vertexList;
 }
 
-list<Edge> Graph::incidentEdges(Vertex vertex) {
+//list<Edge> Graph::incidentEdges(Vertex vertex) {
     //TODO
-}
+//    cout << "";
+//}
 
 list<Vertex> Graph::adjecentVertices(Edge edge) {
     list<Vertex> vertices;
@@ -49,14 +50,14 @@ list<Vertex> Graph::adjecentVertices(Edge edge) {
     vertices.push_back(edge.getVertex2());
     return vertices;
 }
-
+/*
 bool Graph::areAdjecent(Vertex vertexOne, Vertex vertexTwo) {
     for(Edge e : edgeList) {
         if (e.getVertex1() == vertexTwo && e.getVertex2() == vertexOne) {
-ç
+
         }
     }
-}
+}*/
 
 bool Graph::opposite() {
     //TODO

@@ -1,5 +1,8 @@
 #include "Vertex.h"
 
+#ifndef SRC_EDGE_H
+#define SRC_EDGE_H
+
 class Edge {
     private:
     int id;
@@ -11,9 +14,9 @@ class Edge {
     Vertex getVertex1();
     Vertex getVertex2();
 
-    int setId(int);
-    Vertex setVertex1(Vertex);
-    Vertex setVertex2(Vertex);
+    void setId(int);
+    void setVertex1(Vertex);
+    void setVertex2(Vertex);
 };
 
 int Edge::getId() {
@@ -28,14 +31,16 @@ Vertex Edge::getVertex2() {
     return vertex2;
 }
 
-int Edge::setId(int id) {
-    id = id;
+void Edge::setId(int id) {
+    this->id = id;
 }
 
-Vertex Edge::setVertex1(Vertex v1) {
+void Edge::setVertex1(Vertex v1) {
     vertex1 = v1;
 }
 
-Vertex Edge::setVertex2(Vertex v2) {
+void Edge::setVertex2(Vertex v2) {
     vertex1 = v2;
 }
+
+#endif //SRC_EDGE_H

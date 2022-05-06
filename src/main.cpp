@@ -58,19 +58,18 @@ struct simple_walker: pugi::xml_tree_walker
             Edge edge;
             edge.setId(node.attribute("id").as_int());
 
-            SensorNode sensorNode;
-            sensorNode.name = node.attribute("name").as_string();
-            sensorNode.room = node.attribute("room").as_string();
-            sensorNode.temperature = (rand() % 10) + 20;
-            sensorNode.humidity = (rand() % 30) + 40;
-            sensorNode.co2 = (rand() % 800) + 400;
+            Vertex vertex1;
+            Vertex vertex2;
+            vertex1.setId(node.attribute("vertex1").as_int());
+            vertex2.setId(node.attribute("vertex2").as_int());
 
-            edge.setSensorNode(sensorNode);
+            edge.setVertex1(vertex1);
+            edge.setVertex2(vertex2);
 
             graph.addEdgeToList(edge);
         }
 
-        std::cout << std::endl;
+        cout << endl;
 
         return true; // continue traversal
     }

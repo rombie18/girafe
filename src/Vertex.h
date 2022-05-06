@@ -16,7 +16,7 @@ class Vertex {
     public:
         Vertex();
         int getId();
-        int setId(int);
+        void setId(int);
         SensorNode getSensorNode();
         void setSensorNode(SensorNode);
 
@@ -35,7 +35,7 @@ int Vertex::getId() {
     return Id;
 }
 
-int Vertex::setId(int id) {
+void Vertex::setId(int id) {
     Id = id;
 }
 
