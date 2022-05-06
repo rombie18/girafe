@@ -7,6 +7,7 @@
 #include "Vertex.h"
 #include "Graph.cpp"
 #include "Edge.h"
+#include "SensorNode.h"
 
 using namespace std;
 
@@ -33,8 +34,14 @@ struct simple_walker: pugi::xml_tree_walker
             // If XML node is a vertex
 
             // TODO, studenten: Maak hier een nieuwe vertex en verwerk deze (ken bv. id toe). Voeg op het einde deze vertex toe aan de grafe.
+            Vertex<int> *v1 = new Vertex<int>();
+            v1->setId(node.attribute("id").as_int());
+            SensorNode *sensor1= new SensorNode(node.attribute("name").as_string(),
+                                                node.attribute("room").as_string(),(rand()%(5 + 1)) + 18,
+                                                (rand()%(200 + 1) + 400),(rand()%(20 + 1) + 40));
             // Je kan de id uitlezen met 'node.attribute("id").as_int()'. Analoog kan je bv. vertex1 uitlezen met 'node.attribute("vertex1").as_int()'.
-
+            v1->setSensorNode(sensor1); //SensorNode wordt aan vertex toegevoegd
+            graph.addVertexToList(v1);  //Vertex wordt aan de lijst toegevoegd
 
         }
         else if(edge_string.compare(node.name()) == 0) {
@@ -42,6 +49,25 @@ struct simple_walker: pugi::xml_tree_walker
 
             // TODO, studenten: Maak hier een nieuwe vertex en verwerk deze (ken bv. id toe). Voeg op het einde deze vertex toe aan de grafe.
             // Je kan de id uitlezen met 'node.attribute("id").as_int()'. Analoog kan je bv. vertex1 uitlezen met 'node.attribute("vertex1").as_int()'.
+            Edge *e1 = new Edge; //Nieuwe edge aangemaakt
+            e1->setId(node.attribute("id").as_int()); //id uilezen
+            list<Vertex<int>*> vertexList = g.getVertices();
+            Vertex<int>* ID_vertex1 = nullptr;
+            for(Vertex<int>* v : vertexList){
+                if(v->getId()==node.attribute("vertex1").as_int()){
+                    ID_vertex1 = v;
+                }
+            }
+            Vertex<int>* ID_vertex2 = nullptr;
+            for(Vertex<int>* v : vertexList){
+                if(v->getId()==node.attribute("vertex2").as_int()){
+                    ID_vertex2 = v;
+                }
+            }
+            e1->setVertex1(ID_vertex1); //Uit de vertexlijst halen we de juiste vertices en voegen we toe aan de edge
+            e1->setVertex2(ID_vertex2);
+            graph.addEdgeToList(e1); //Edge wordt aan lijst toegevoegd
+
         }
 
         std::cout << std::endl;
@@ -77,8 +103,6 @@ int main()
 
 
 int main(){
-    Vertex V1;
-    V1.setId(67);
-    cout<<V1.getId();
+
 
 }
