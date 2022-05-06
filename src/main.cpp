@@ -5,6 +5,8 @@
 #include "pugixml.hpp"
 #include <stdexcept> // For throwing errors
 #include "Vertex.h"
+#include "Graph.cpp"
+#include "Edge.h"
 
 using namespace std;
 
@@ -18,7 +20,7 @@ std::string sensornode_string("SensorNode");
 // Create an empty graph. This is needed due to the if statements that have nothing to do with 'if graph_string'.
 // For example, the 'if edge_string' does not know about graph g.
 // TODO, studenten: maak hier nieuwe grafe aan.
-Graphe g;
+Graph graph;
 
 struct simple_walker: pugi::xml_tree_walker
 {
