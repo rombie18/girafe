@@ -13,10 +13,10 @@ using namespace std;
 
 // CONSTANTS
 // String definitions: these are necessary for the string.compare() method.
-std::string graph_string ("graph");
-std::string edge_string ("edge");
-std::string vertex_string ("vertex");
-std::string sensornode_string("SensorNode");
+string graph_string ("graph");
+string edge_string ("edge");
+string vertex_string ("vertex");
+string sensornode_string("SensorNode");
 
 // Create an empty graph. This is needed due to the if statements that have nothing to do with 'if graph_string'.
 // For example, the 'if edge_string' does not know about graph g.
@@ -34,21 +34,29 @@ struct simple_walker: pugi::xml_tree_walker
             // If XML node is a vertex
 
             // TODO, studenten: Maak hier een nieuwe vertex en verwerk deze (ken bv. id toe). Voeg op het einde deze vertex toe aan de grafe.
-            Vertex<int> *v1 = new Vertex<int>();
-            v1->setId(node.attribute("id").as_int());
-            SensorNode *sensor1= new SensorNode(node.attribute("name").as_string(),
-                                                node.attribute("room").as_string(),(rand()%(5 + 1)) + 18,
-                                                (rand()%(200 + 1) + 400),(rand()%(20 + 1) + 40));
-            // Je kan de id uitlezen met 'node.attribute("id").as_int()'. Analoog kan je bv. vertex1 uitlezen met 'node.attribute("vertex1").as_int()'.
-            v1->setSensorNode(sensor1); //SensorNode wordt aan vertex toegevoegd
-            graph.addVertexToList(v1);  //Vertex wordt aan de lijst toegevoegd
 
+            Vertex vertex;
+            vertex.setId(node.attribute("id").as_int());
+
+            SensorNode sensorNode;
+            sensorNode.name = node.attribute("name").as_string();
+            sensorNode.room = node.attribute("room").as_string();
+            sensorNode.temperature = (rand() % 10) + 20;
+            sensorNode.humidity = (rand() % 30) + 40;
+            sensorNode.co2 = (rand() % 800) + 400;
+
+            vertex.setSensorNode(sensorNode);
+
+            graph.addVertexToList(vertex);
         }
         else if(edge_string.compare(node.name()) == 0) {
             // If XML node is an edge
 
             // TODO, studenten: Maak hier een nieuwe vertex en verwerk deze (ken bv. id toe). Voeg op het einde deze vertex toe aan de grafe.
             // Je kan de id uitlezen met 'node.attribute("id").as_int()'. Analoog kan je bv. vertex1 uitlezen met 'node.attribute("vertex1").as_int()'.
+
+            
+
             Edge *e1 = new Edge; //Nieuwe edge aangemaakt
             e1->setId(node.attribute("id").as_int()); //id uilezen
             list<Vertex<int>*> vertexList = g.getVertices();
@@ -100,4 +108,3 @@ int main()
     std::cin.get();
     return 0;
 }
-
