@@ -25,14 +25,14 @@ void bfs(Graph* graph, Vertex* startVertex) {
     list<Edge*> exploredEdges = list<Edge*>();
     list<Vertex*> exploredVertices = list<Vertex*>();
 
-    map<int, vector<Vertex*>> l = map<int, vector<Vertex*>>();
+    map<int, vector<Vertex*>> vertices = map<int, vector<Vertex*>>();
 
-    l[level] = vector<Vertex*>();
-    l[level].push_back(startVertex);
+    vertices[level] = vector<Vertex*>();
+    vertices[level].push_back(startVertex);
 
-    while (!l[level].empty()) {
-        l[level+1] = vector<Vertex*>();
-        for(Vertex* vertex : l[level]) {
+    while (!vertices[level].empty()) {
+        vertices[level+1] = vector<Vertex*>();
+        for(Vertex* vertex : vertices[level]) {
             for(Edge* edge : graph->incidentEdges(vertex)) {
                 if (!in_list(exploredEdges, edge)) {
                     exploredEdges.push_back(edge);
@@ -40,7 +40,7 @@ void bfs(Graph* graph, Vertex* startVertex) {
                     if (!in_list(exploredVertices, opposite)) {
                         exploredVertices.push_back(opposite);
                         cout << "Discovery edge: " + to_string(edge->getId()) << endl;
-                        l[level+1].push_back(opposite);
+                        vertices[level+1].push_back(opposite);
                     } else {
                         cout << "Cross edge: " + to_string(edge->getId()) << endl;
                     }
@@ -49,11 +49,12 @@ void bfs(Graph* graph, Vertex* startVertex) {
         }
         level++;
     }
+    vertices.erase(level);
 
     cout << endl;
 
     map<int, vector<Vertex*>>::iterator i;
-    for(i = l.begin(); i != l.end(); i++) {
+    for(i = vertices.begin(); i != vertices.end(); i++) {
         cout << "Level " + to_string(i->first) << endl;
         for(Vertex* vertex : i->second) {
             cout << " Vertex " + to_string(vertex->getId()) + ": " + vertex->getSensorNode()->room << endl;
@@ -61,5 +62,4 @@ void bfs(Graph* graph, Vertex* startVertex) {
     }
 }
 
-// cout << vertex + " level: " << + level << endl;
 #endif //MAIN_CPP_ALGORITHM_H
