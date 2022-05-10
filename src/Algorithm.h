@@ -30,6 +30,8 @@ void bfs(Graph* graph, Vertex* startVertex) {
     vertices[level] = vector<Vertex*>();
     vertices[level].push_back(startVertex);
 
+    cout << "Type of Edge:"<< endl;
+
     while (!vertices[level].empty()) {
         vertices[level+1] = vector<Vertex*>();
         for(Vertex* vertex : vertices[level]) {
@@ -39,10 +41,10 @@ void bfs(Graph* graph, Vertex* startVertex) {
                     Vertex* opposite = graph->opposite(vertex, edge);
                     if (!in_list(exploredVertices, opposite)) {
                         exploredVertices.push_back(opposite);
-                        cout << "Discovery edge: " + to_string(edge->getId()) << endl;
+                        cout << "  Discovery edge: " + to_string(edge->getId()) << endl;
                         vertices[level+1].push_back(opposite);
                     } else {
-                        cout << "Cross edge: " + to_string(edge->getId()) << endl;
+                        cout << "  Cross edge: " + to_string(edge->getId()) << endl;
                     }
                 }
             }
@@ -52,12 +54,14 @@ void bfs(Graph* graph, Vertex* startVertex) {
     vertices.erase(level);
 
     cout << endl;
+    cout << "Levels:"<< endl;
+
 
     map<int, vector<Vertex*>>::iterator i;
     for(i = vertices.begin(); i != vertices.end(); i++) {
-        cout << "Level " + to_string(i->first) << endl;
+        cout << "  Level " + to_string(i->first) + ":"<< endl;
         for(Vertex* vertex : i->second) {
-            cout << " Vertex " + to_string(vertex->getId()) + ": " + vertex->getSensorNode()->room << endl;
+            cout << "    Vertex " + to_string(vertex->getId()) + ": " + vertex->getSensorNode()->room << endl;
         }
     }
 }
