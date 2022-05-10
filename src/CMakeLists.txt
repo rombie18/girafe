@@ -13,4 +13,6 @@ add_executable(src
         SensorNode.h
         Vertex.h
         Edge.h
-        Graph.h)
+        Graph.h
+        Algorithm.h
+        )

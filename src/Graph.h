@@ -22,7 +22,7 @@ public:
     list<Edge*> getEdges();
     list<Vertex*> getVertices();
     list<Edge*> incidentEdges(Vertex* vertex);
-    list<Vertex*> adjecentVertices(Edge* edge);
+    list<Vertex*> adjecentVertices(Vertex* vertex);
     bool areAdjecent(Vertex* one, Vertex* two);
     Vertex* opposite(Vertex* vertex, Edge* edge);
 };
@@ -76,10 +76,13 @@ list<Edge*> Graph::incidentEdges(Vertex* vertex) {
 //gegeven vertex. De functie ‘adjacentVertices’
 //geeft daarom een lijst met deze vertices voor
 //een gegeven vertex.
-list<Vertex*> Graph::adjecentVertices(Edge* edge) {
+list<Vertex*> Graph::adjecentVertices(Vertex* vertex) {
     list<Vertex *> vertices;
-    vertices.push_back(edge->getVertex1());
-    vertices.push_back(edge->getVertex2());
+    for(Edge* edge : edgeList) {
+        if (edge->getVertex1() == vertex || edge->getVertex2() == vertex) {
+            vertices.push_back(vertex);
+        }
+    }
 
     return vertices;
 }
