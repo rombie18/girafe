@@ -8,15 +8,17 @@
 #include "Graph.h"
 #include "Edge.h"
 #include "SensorNode.h"
+#include "Algorithm.h"
 
 using namespace std;
 
 // CONSTANTS
 // String definitions: these are necessary for the string.compare() method.
-string graph_string ("graph");
-string edge_string ("edge");
-string vertex_string ("vertex");
-string sensornode_string("sensornode");
+std::string graph_string ("graph");
+std::string edge_string ("edge");
+std::string vertex_string ("vertex");
+std::string sensornode_string("sensornode");
+
 
 // Create an empty graph. This is needed due to the if statements that have nothing to do with 'if graph_string'.
 // For example, the 'if edge_string' does not know about graph g.
@@ -35,11 +37,9 @@ struct simple_walker: pugi::xml_tree_walker
             Vertex* vertex = new Vertex();
             vertex->setId(node.attribute("id").as_int());
 
-
-            string name = node.attribute("name").as_string();
             SensorNode* sensorNode = new SensorNode(
-                    name,
-                node.attribute("room").as_string(),
+                node.first_child().attribute("name").as_string(),
+                node.first_child().attribute("room").as_string(),
                 (rand() % 10) + 20,
                 (rand() % 30) + 40,
                 (rand() % 800) + 400
@@ -47,8 +47,8 @@ struct simple_walker: pugi::xml_tree_walker
 
             vertex->setSensorNode(sensorNode);
             graph.addVertexToList(vertex);
-        }
-        else if(edge_string.compare(node.name()) == 0) {
+
+        } else if(edge_string.compare(node.name()) == 0) {
             // If XML node is an edge
 
             // Je kan de id uitlezen met 'node.attribute("id").as_int()'. Analoog kan je bv. vertex1 uitlezen met 'node.attribute("vertex1").as_int()'.
@@ -56,18 +56,23 @@ struct simple_walker: pugi::xml_tree_walker
             Edge* edge = new Edge();
             edge->setId(node.attribute("id").as_int());
 
-            Vertex* vertex1 = new Vertex();
-            Vertex* vertex2 = new Vertex();
-            vertex1->setId(node.attribute("vertex1").as_int());
-            vertex2->setId(node.attribute("vertex2").as_int());
+            Vertex* vertex1;
+            Vertex* vertex2;
+            for(Vertex* vertex : graph.getVertices()) {
+                if (vertex->getId() == node.attribute("vertex1").as_int()) {
+                    vertex1 = vertex;
+                }
+                if (vertex->getId() == node.attribute("vertex2").as_int()) {
+                    vertex2 = vertex;
+                }
+            }
 
             edge->setVertex1(vertex1);
             edge->setVertex2(vertex2);
 
             graph.addEdgeToList(edge);
-        }
 
-        cout << endl;
+        }
 
         return true; // continue traversal
     }
@@ -95,9 +100,25 @@ int main()
     // The graph data should now be present in memory in the form of your graph data structure.
 
 
-    for(Vertex* vertex : graph.getVertices()){
-        cout << vertex->getSensorNode()->name << endl;
+    //cout << "BFS result: " + to_string(bfs(&graph)) + endl;
+
+    Vertex* startVertex = nullptr;
+    for(Vertex* vertex : graph.getVertices()) {
+        if (vertex->getSensorNode()->room == "E116") {
+            startVertex = vertex;
+        }
     }
+
+    list<Edge*> edges = graph.incidentEdges(startVertex);
+
+    bfs(&graph, startVertex);
+
+
+    //for(Vertex* vertex : graph.getVertices()){
+    //    cout << vertex->getSensorNode()->name << endl;
+    //    cout << vertex->getSensorNode()->room << endl;
+    //    cout << vertex->getSensorNode()->temperature << endl;
+    //}
 
 
     /*
@@ -136,8 +157,6 @@ int main()
     cout << sn1.name << endl;
     cout << sn2.name << endl;
     */
-
-
 
 
     return 0;
