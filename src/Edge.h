@@ -6,41 +6,52 @@
 class Edge {
     private:
     int id;
-    Vertex vertex1;
-    Vertex vertex2;
+    Vertex* vertex1;
+    Vertex* vertex2;
 
     public:
     int getId();
-    Vertex getVertex1();
-    Vertex getVertex2();
+    Vertex* getVertex1();
+    Vertex* getVertex2();
 
-    void setId(int);
-    void setVertex1(Vertex);
-    void setVertex2(Vertex);
+    void setId(int id);
+    void setVertex1(Vertex* vertex);
+    void setVertex2(Vertex* vertex);
 };
 
+//Returnt de identifier (id, getal).
 int Edge::getId() {
     return id;
 }
 
-Vertex Edge::getVertex1() {
-    return vertex1;
-}
-
-Vertex Edge::getVertex2() {
-    return vertex2;
-}
-
+//Stelt de identifier van de vertex/edge in
+//(variabele ‘id’ in voorgestelde UML-diagram).
 void Edge::setId(int id) {
     this->id = id;
 }
 
-void Edge::setVertex1(Vertex v1) {
-    vertex1 = v1;
+//Returnt een referentie naar de variabele
+//‘vertex1/2’.
+Vertex* Edge::getVertex1() {
+    return vertex1;
 }
 
-void Edge::setVertex2(Vertex v2) {
-    vertex1 = v2;
+//Returnt een referentie naar de variabele
+//‘vertex1/2’.
+Vertex* Edge::getVertex2() {
+    return vertex2;
+}
+
+//Stelt de referentie naar vertex1/2 in voor de
+//edge
+void Edge::setVertex1(Vertex* vertex) {
+    vertex1 = vertex;
+}
+
+//Stelt de referentie naar vertex1/2 in voor de
+//edge
+void Edge::setVertex2(Vertex* vertex) {
+    vertex2 = vertex;
 }
 
 #endif //SRC_EDGE_H

@@ -9,4 +9,8 @@ add_executable(src
         main.cpp
         pugiconfig.hpp
         pugixml.cpp
-        pugixml.hpp SensorNode.h Vertex.h Edge.h Graph.cpp)
+        pugixml.hpp
+        SensorNode.h
+        Vertex.h
+        Edge.h
+        Graph.h)
