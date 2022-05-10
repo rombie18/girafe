@@ -59,16 +59,18 @@ list<Vertex*> Graph::getVertices() {
 //De functie ‘incidentEdges’ geeft daarom een
 //lijst met deze edges voor een gegeven vertex.
 list<Edge*> Graph::incidentEdges(Vertex* vertex) {
-    list<Edge*> incidentEdges;
+    list<Edge*> incidentEdges = {};
     for(Edge* edge : edgeList) {
-        if (edge->getVertex1() == vertex) {
-            incidentEdges.push_back(edge);
-        } else if (edge->getVertex2() == vertex) {
+        Vertex* temp1 = edge->getVertex1();
+        Vertex* temp2 = edge->getVertex2();
+        if (temp1 == vertex || temp2 == vertex) {
             incidentEdges.push_back(edge);
         }
     }
 
     return incidentEdges;
+
+
 }
 
 //De ‘adjacent vertices’ van een vertex zijn alle

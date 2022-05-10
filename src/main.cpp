@@ -56,16 +56,21 @@ struct simple_walker: pugi::xml_tree_walker
             Edge* edge = new Edge();
             edge->setId(node.attribute("id").as_int());
 
-            Vertex* vertex1 = new Vertex();
-            Vertex* vertex2 = new Vertex();
-            vertex1->setId(node.attribute("vertex1").as_int());
-            vertex2->setId(node.attribute("vertex2").as_int());
+            Vertex* vertex1;
+            Vertex* vertex2;
+            for(Vertex* vertex : graph.getVertices()) {
+                if (vertex->getId() == node.attribute("vertex1").as_int()) {
+                    vertex1 = vertex;
+                }
+                if (vertex->getId() == node.attribute("vertex2").as_int()) {
+                    vertex2 = vertex;
+                }
+            }
 
             edge->setVertex1(vertex1);
             edge->setVertex2(vertex2);
 
             graph.addEdgeToList(edge);
-
 
         }
 
@@ -98,7 +103,17 @@ int main()
 
 
     //cout << "BFS result: " + to_string(bfs(&graph)) + endl;
-    bfs(&graph);
+
+    Vertex* startVertex = nullptr;
+    for(Vertex* vertex : graph.getVertices()) {
+        if (vertex->getSensorNode()->room == "E116") {
+            startVertex = vertex;
+        }
+    }
+
+    list<Edge*> edges = graph.incidentEdges(startVertex);
+
+    bfs(&graph, startVertex);
 
 
     //for(Vertex* vertex : graph.getVertices()){
