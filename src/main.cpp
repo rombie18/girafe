@@ -16,7 +16,7 @@ using namespace std;
 string graph_string ("graph");
 string edge_string ("edge");
 string vertex_string ("vertex");
-string sensornode_string("SensorNode");
+string sensornode_string("sensornode");
 
 // Create an empty graph. This is needed due to the if statements that have nothing to do with 'if graph_string'.
 // For example, the 'if edge_string' does not know about graph g.
@@ -32,37 +32,39 @@ struct simple_walker: pugi::xml_tree_walker
         if(vertex_string.compare(node.name()) == 0) {
             // If XML node is a vertex
 
-            Vertex vertex;
-            vertex.setId(node.attribute("id").as_int());
+            Vertex* vertex = new Vertex();
+            vertex->setId(node.attribute("id").as_int());
 
-            SensorNode sensorNode;
-            sensorNode.name = node.attribute("name").as_string();
-            sensorNode.room = node.attribute("room").as_string();
-            sensorNode.temperature = (rand() % 10) + 20;
-            sensorNode.humidity = (rand() % 30) + 40;
-            sensorNode.co2 = (rand() % 800) + 400;
 
-            vertex.setSensorNode(&sensorNode);
+            string name = node.attribute("name").as_string();
+            SensorNode* sensorNode = new SensorNode(
+                    name,
+                node.attribute("room").as_string(),
+                (rand() % 10) + 20,
+                (rand() % 30) + 40,
+                (rand() % 800) + 400
+           );
 
-            graph.addVertexToList(&vertex);
+            vertex->setSensorNode(sensorNode);
+            graph.addVertexToList(vertex);
         }
         else if(edge_string.compare(node.name()) == 0) {
             // If XML node is an edge
 
             // Je kan de id uitlezen met 'node.attribute("id").as_int()'. Analoog kan je bv. vertex1 uitlezen met 'node.attribute("vertex1").as_int()'.
 
-            Edge edge;
-            edge.setId(node.attribute("id").as_int());
+            Edge* edge = new Edge();
+            edge->setId(node.attribute("id").as_int());
 
-            Vertex vertex1;
-            Vertex vertex2;
-            vertex1.setId(node.attribute("vertex1").as_int());
-            vertex2.setId(node.attribute("vertex2").as_int());
+            Vertex* vertex1 = new Vertex();
+            Vertex* vertex2 = new Vertex();
+            vertex1->setId(node.attribute("vertex1").as_int());
+            vertex2->setId(node.attribute("vertex2").as_int());
 
-            edge.setVertex1(&vertex1);
-            edge.setVertex2(&vertex2);
+            edge->setVertex1(vertex1);
+            edge->setVertex2(vertex2);
 
-            graph.addEdgeToList(&edge);
+            graph.addEdgeToList(edge);
         }
 
         cout << endl;
@@ -94,7 +96,7 @@ int main()
 
 
     for(Vertex* vertex : graph.getVertices()){
-        cout << vertex->getSensorNode() << endl;
+        cout << vertex->getSensorNode()->name << endl;
     }
 
 
