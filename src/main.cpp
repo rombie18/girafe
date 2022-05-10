@@ -4,7 +4,13 @@
 #include <string>
 #include "pugixml.hpp"
 #include <stdexcept> // For throwing errors
+#include "Vertex.h"
+#include "Graph.h"
+#include "Edge.h"
+#include "SensorNode.h"
+#include "Algorithm.h"
 
+using namespace std;
 
 // CONSTANTS
 // String definitions: these are necessary for the string.compare() method.
@@ -13,10 +19,10 @@ std::string edge_string ("edge");
 std::string vertex_string ("vertex");
 std::string sensornode_string("sensornode");
 
+
 // Create an empty graph. This is needed due to the if statements that have nothing to do with 'if graph_string'.
 // For example, the 'if edge_string' does not know about graph g.
-// TODO, studenten: maak hier nieuwe grafe aan.
-
+Graph graph;
 
 struct simple_walker: pugi::xml_tree_walker
 {
@@ -28,17 +34,45 @@ struct simple_walker: pugi::xml_tree_walker
         if(vertex_string.compare(node.name()) == 0) {
             // If XML node is a vertex
 
-            // TODO, studenten: Maak hier een nieuwe vertex en verwerk deze (ken bv. id toe). Voeg op het einde deze vertex toe aan de grafe.
-            // Je kan de id uitlezen met 'node.attribute("id").as_int()'. Analoog kan je bv. vertex1 uitlezen met 'node.attribute("vertex1").as_int()'.
-        }
-        else if(edge_string.compare(node.name()) == 0) {
+            Vertex* vertex = new Vertex();
+            vertex->setId(node.attribute("id").as_int());
+
+            SensorNode* sensorNode = new SensorNode(
+                node.first_child().attribute("name").as_string(),
+                node.first_child().attribute("room").as_string(),
+                (rand() % 10) + 20,
+                (rand() % 30) + 40,
+                (rand() % 800) + 400
+           );
+
+            vertex->setSensorNode(sensorNode);
+            graph.addVertexToList(vertex);
+
+        } else if(edge_string.compare(node.name()) == 0) {
             // If XML node is an edge
 
-            // TODO, studenten: Maak hier een nieuwe vertex en verwerk deze (ken bv. id toe). Voeg op het einde deze vertex toe aan de grafe.
             // Je kan de id uitlezen met 'node.attribute("id").as_int()'. Analoog kan je bv. vertex1 uitlezen met 'node.attribute("vertex1").as_int()'.
-        }
 
-        std::cout << std::endl;
+            Edge* edge = new Edge();
+            edge->setId(node.attribute("id").as_int());
+
+            Vertex* vertex1;
+            Vertex* vertex2;
+            for(Vertex* vertex : graph.getVertices()) {
+                if (vertex->getId() == node.attribute("vertex1").as_int()) {
+                    vertex1 = vertex;
+                }
+                if (vertex->getId() == node.attribute("vertex2").as_int()) {
+                    vertex2 = vertex;
+                }
+            }
+
+            edge->setVertex1(vertex1);
+            edge->setVertex2(vertex2);
+
+            graph.addEdgeToList(edge);
+
+        }
 
         return true; // continue traversal
     }
@@ -47,6 +81,7 @@ struct simple_walker: pugi::xml_tree_walker
 
 int main()
 {
+
     // Pugi::xml initialization
     pugi::xml_document file;
     file.load_file("../../data/graph.graphml");
@@ -65,6 +100,64 @@ int main()
     // The graph data should now be present in memory in the form of your graph data structure.
 
 
-    std::cin.get();
+    //cout << "BFS result: " + to_string(bfs(&graph)) + endl;
+
+    Vertex* startVertex = nullptr;
+    for(Vertex* vertex : graph.getVertices()) {
+        if (vertex->getSensorNode()->room == "E116") {
+            startVertex = vertex;
+        }
+    }
+
+    list<Edge*> edges = graph.incidentEdges(startVertex);
+
+    bfs(&graph, startVertex);
+
+
+    //for(Vertex* vertex : graph.getVertices()){
+    //    cout << vertex->getSensorNode()->name << endl;
+    //    cout << vertex->getSensorNode()->room << endl;
+    //    cout << vertex->getSensorNode()->temperature << endl;
+    //}
+
+
+    /*
+    Graph graph;
+    SensorNode sn1;
+    SensorNode sn2;
+    sn1.name = "Wout";
+    sn2.name = "Daan";
+    sn1.room = "E110";
+    sn2.room = "E220";
+    sn1.humidity = 0;
+    sn2.humidity = 0;
+    sn1.temperature = 0;
+    sn2.temperature = 0;
+    sn1.co2 = 0;
+    sn2.co2 = 0;
+
+
+    Vertex v1;
+    Vertex v2;
+    v1.setSensorNode(&sn1);
+    v2.setSensorNode(&sn2);
+    v1.setId(1);
+    v2.setId(2);
+
+    Edge edge;
+    edge.setVertex1(&v1);
+    edge.setVertex2(&v2);
+
+    graph.addEdgeToList(&edge);
+    graph.addVertexToList(&v1);
+    graph.addVertexToList(&v2);
+
+    cout << v1.getId() << endl;
+    cout << v2.getId() << endl;
+    cout << sn1.name << endl;
+    cout << sn2.name << endl;
+    */
+
+
     return 0;
 }
