@@ -74,8 +74,6 @@ struct simple_walker: pugi::xml_tree_walker
 
         }
 
-        cout << endl;
-
         return true; // continue traversal
     }
 };
