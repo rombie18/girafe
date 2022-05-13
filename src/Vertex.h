@@ -7,42 +7,49 @@
 #ifndef SRC_VERTEX_H
 #define SRC_VERTEX_H
 
+template<class T>
 class Vertex {
     private:
     int id;
-    SensorNode* sensornode;
+
+    T* sensornode;
 
     public:
         Vertex();
         int getId();
         void setId(int id);
-        SensorNode* getSensorNode();
-        void setSensorNode(SensorNode* sensorNode);
+        T* getSensorNode();
+        void setSensorNode(T* sensorNode);
 
 };
 
-Vertex::Vertex() {}
+template<typename T>
+Vertex<T>::Vertex() {}
 
 //Returnt de identifier (id, getal).
-int Vertex::getId() {
+template<typename T>
+int Vertex<T>::getId() {
     return id;
 }
 
 //Stelt de identifier van de vertex/edge in
 //(variabele ‘id’ in voorgestelde UML-diagram).
-void Vertex::setId(int id) {
+template<typename T>
+void Vertex<T>::setId(int id) {
     this->id = id;
 }
 
 //Geeft een referentie/verwijzing naar de
 //sensornode van deze vertex.
-SensorNode* Vertex::getSensorNode() {
+template<typename T>
+T* Vertex<T>::getSensorNode() {
     return sensornode;
 }
 
 //Stelt de pointer naar de sensornode in
 //(variabele ‘sensornode’ in voorgestelde UMLdiagram).
-void Vertex::setSensorNode(SensorNode* sensorNode) {
+template<typename T>
+void Vertex<T>::setSensorNode(T* sensorNode) {
     this->sensornode = sensorNode;
 }
 

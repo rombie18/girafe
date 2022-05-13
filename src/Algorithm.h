@@ -18,27 +18,27 @@ bool in_list(std::list<T> haystack, T needle) {
     return find(haystack.begin(), haystack.end(), needle) != haystack.end();
 }
 
-void bfs(Graph* graph, Vertex* startVertex) {
+void bfs(Graph* graph, Vertex<SensorNode>* startVertex) {
 
     int level = 0;
 
     list<Edge*> exploredEdges = list<Edge*>();
-    list<Vertex*> exploredVertices = list<Vertex*>();
+    list<Vertex<SensorNode>*> exploredVertices = list<Vertex<SensorNode>*>();
 
-    map<int, vector<Vertex*>> vertices = map<int, vector<Vertex*>>();
+    map<int, vector<Vertex<SensorNode>*>> vertices = map<int, vector<Vertex<SensorNode>*>>();
 
-    vertices[level] = vector<Vertex*>();
+    vertices[level] = vector<Vertex<SensorNode>*>();
     vertices[level].push_back(startVertex);
 
     cout << "Type of Edge:"<< endl;
 
     while (!vertices[level].empty()) {
-        vertices[level+1] = vector<Vertex*>();
-        for(Vertex* vertex : vertices[level]) {
+        vertices[level+1] = vector<Vertex<SensorNode>*>();
+        for(Vertex<SensorNode>* vertex : vertices[level]) {
             for(Edge* edge : graph->incidentEdges(vertex)) {
                 if (!in_list(exploredEdges, edge)) {
                     exploredEdges.push_back(edge);
-                    Vertex* opposite = graph->opposite(vertex, edge);
+                    Vertex<SensorNode>* opposite = graph->opposite(vertex, edge);
                     if (!in_list(exploredVertices, opposite)) {
                         exploredVertices.push_back(opposite);
                         cout << "  Discovery edge: " + to_string(edge->getId()) << endl;
@@ -57,10 +57,10 @@ void bfs(Graph* graph, Vertex* startVertex) {
     cout << "Levels:"<< endl;
 
 
-    map<int, vector<Vertex*>>::iterator i;
+    map<int, vector<Vertex<SensorNode>*>>::iterator i;
     for(i = vertices.begin(); i != vertices.end(); i++) {
         cout << "  Level " + to_string(i->first) + ":"<< endl;
-        for(Vertex* vertex : i->second) {
+        for(Vertex<SensorNode>* vertex : i->second) {
             cout << "    Vertex " + to_string(vertex->getId()) + ": " + vertex->getSensorNode()->room << endl;
         }
     }

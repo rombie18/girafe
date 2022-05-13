@@ -34,7 +34,7 @@ struct simple_walker: pugi::xml_tree_walker
         if(vertex_string.compare(node.name()) == 0) {
             // If XML node is a vertex
 
-            Vertex* vertex = new Vertex();
+            Vertex<SensorNode>* vertex = new Vertex<SensorNode>();
             vertex->setId(node.attribute("id").as_int());
 
             SensorNode* sensorNode = new SensorNode(
@@ -56,9 +56,9 @@ struct simple_walker: pugi::xml_tree_walker
             Edge* edge = new Edge();
             edge->setId(node.attribute("id").as_int());
 
-            Vertex* vertex1;
-            Vertex* vertex2;
-            for(Vertex* vertex : graph.getVertices()) {
+            Vertex<SensorNode>* vertex1;
+            Vertex<SensorNode>* vertex2;
+            for(Vertex<SensorNode>* vertex : graph.getVertices()) {
                 if (vertex->getId() == node.attribute("vertex1").as_int()) {
                     vertex1 = vertex;
                 }
@@ -81,7 +81,6 @@ struct simple_walker: pugi::xml_tree_walker
 
 int main()
 {
-
     // Pugi::xml initialization
     pugi::xml_document file;
     file.load_file("../../data/graph.graphml");
@@ -102,8 +101,8 @@ int main()
 
     //cout << "BFS result: " + to_string(bfs(&graph)) + endl;
 
-    Vertex* startVertex = nullptr;
-    for(Vertex* vertex : graph.getVertices()) {
+    Vertex<SensorNode>* startVertex = nullptr;
+    for(Vertex<SensorNode>* vertex : graph.getVertices()) {
         if (vertex->getSensorNode()->room == "E116") {
             startVertex = vertex;
         }

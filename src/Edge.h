@@ -6,17 +6,17 @@
 class Edge {
     private:
     int id;
-    Vertex* vertex1;
-    Vertex* vertex2;
+    Vertex<SensorNode>* vertex1;
+    Vertex<SensorNode>* vertex2;
 
     public:
     int getId();
-    Vertex* getVertex1();
-    Vertex* getVertex2();
+    Vertex<SensorNode>* getVertex1();
+    Vertex<SensorNode>* getVertex2();
 
     void setId(int id);
-    void setVertex1(Vertex* vertex);
-    void setVertex2(Vertex* vertex);
+    void setVertex1(Vertex<SensorNode>* vertex);
+    void setVertex2(Vertex<SensorNode>* vertex);
 };
 
 //Returnt de identifier (id, getal).
@@ -32,25 +32,25 @@ void Edge::setId(int id) {
 
 //Returnt een referentie naar de variabele
 //‘vertex1/2’.
-Vertex* Edge::getVertex1() {
+Vertex<SensorNode>* Edge::getVertex1() {
     return vertex1;
 }
 
 //Returnt een referentie naar de variabele
 //‘vertex1/2’.
-Vertex* Edge::getVertex2() {
+Vertex<SensorNode>* Edge::getVertex2() {
     return vertex2;
 }
 
 //Stelt de referentie naar vertex1/2 in voor de
 //edge
-void Edge::setVertex1(Vertex* vertex) {
+void Edge::setVertex1(Vertex<SensorNode>* vertex) {
     vertex1 = vertex;
 }
 
 //Stelt de referentie naar vertex1/2 in voor de
 //edge
-void Edge::setVertex2(Vertex* vertex) {
+void Edge::setVertex2(Vertex<SensorNode>* vertex) {
     vertex2 = vertex;
 }
 
