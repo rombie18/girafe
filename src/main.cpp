@@ -81,6 +81,7 @@ struct simple_walker: pugi::xml_tree_walker
 
 int main()
 {
+    ///*
     // Pugi::xml initialization
     pugi::xml_document file;
     file.load_file("../../data/graph.graphml");
@@ -103,6 +104,7 @@ int main()
 
     Vertex<SensorNode>* startVertex = nullptr;
     for(Vertex<SensorNode>* vertex : graph.getVertices()) {
+        cout << vertex->getSensorNode()->room << endl;      //test code
         if (vertex->getSensorNode()->room == "E116") {
             startVertex = vertex;
         }
@@ -110,36 +112,31 @@ int main()
 
     list<Edge*> edges = graph.incidentEdges(startVertex);
 
-    bfs(&graph, startVertex);
-
-
-    //for(Vertex* vertex : graph.getVertices()){
-    //    cout << vertex->getSensorNode()->name << endl;
-    //    cout << vertex->getSensorNode()->room << endl;
-    //    cout << vertex->getSensorNode()->temperature << endl;
-    //}
-
+    //bfs(&graph, startVertex);
+    //*/
 
     /*
     Graph graph;
-    SensorNode sn1;
-    SensorNode sn2;
-    sn1.name = "Wout";
-    sn2.name = "Daan";
-    sn1.room = "E110";
-    sn2.room = "E220";
-    sn1.humidity = 0;
-    sn2.humidity = 0;
-    sn1.temperature = 0;
-    sn2.temperature = 0;
-    sn1.co2 = 0;
-    sn2.co2 = 0;
+    SensorNode* sn1 = new SensorNode(
+            "Wout",
+            "E110",
+            647,
+            25,
+            1245
+    );
 
+    SensorNode* sn2 = new SensorNode(
+            "Daan",
+            "E220",
+            743,
+            28,
+            1178
+    );
 
-    Vertex v1;
-    Vertex v2;
-    v1.setSensorNode(&sn1);
-    v2.setSensorNode(&sn2);
+    Vertex<SensorNode> v1;
+    Vertex<SensorNode> v2;
+    v1.setSensorNode(sn1);
+    v2.setSensorNode(sn2);
     v1.setId(1);
     v2.setId(2);
 
@@ -153,10 +150,15 @@ int main()
 
     cout << v1.getId() << endl;
     cout << v2.getId() << endl;
-    cout << sn1.name << endl;
-    cout << sn2.name << endl;
-    */
+    cout << sn2->name << endl;
+    cout << sn1->temperature << endl;
 
+    for(Vertex<SensorNode>* vertex : graph.getVertices()){
+        cout << vertex->getSensorNode()->name << endl;
+        cout << vertex->getSensorNode()->room << endl;
+        cout << vertex->getSensorNode()->temperature << endl;
+    }
+    */
 
     return 0;
 }
