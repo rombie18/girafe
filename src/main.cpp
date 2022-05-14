@@ -104,7 +104,6 @@ int main()
 
     Vertex<SensorNode>* startVertex = nullptr;
     for(Vertex<SensorNode>* vertex : graph.getVertices()) {
-        cout << vertex->getSensorNode()->room << endl;      //test code
         if (vertex->getSensorNode()->room == "E116") {
             startVertex = vertex;
         }
@@ -112,7 +111,7 @@ int main()
 
     list<Edge*> edges = graph.incidentEdges(startVertex);
 
-    //bfs(&graph, startVertex);
+    bfs(&graph, startVertex);
     //*/
 
     /*
@@ -152,7 +151,8 @@ int main()
     cout << v2.getId() << endl;
     cout << sn2->name << endl;
     cout << sn1->temperature << endl;
-
+    */
+    /*
     for(Vertex<SensorNode>* vertex : graph.getVertices()){
         cout << vertex->getSensorNode()->name << endl;
         cout << vertex->getSensorNode()->room << endl;
