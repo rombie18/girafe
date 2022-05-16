@@ -52,7 +52,6 @@ void bfs(Graph* graph, Vertex<SensorNode>* startVertex) {
     cout << endl;
     cout << "Levels:"<< endl;
 
-
     map<int, vector<Vertex<SensorNode>*>>::iterator i;
     for(i = vertices.begin(); i != vertices.end(); i++) {
         cout << "  Level " + to_string(i->first) + ":"<< endl;

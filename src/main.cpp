@@ -1,14 +1,13 @@
 #include <iostream>
-#include <iterator>
 #include <list>
 #include <string>
 #include "pugixml.hpp"
-#include <stdexcept> // For throwing errors
 #include "Vertex.h"
 #include "Graph.h"
 #include "Edge.h"
 #include "SensorNode.h"
 #include "Algorithm.h"
+#include "Exceptions.h"
 
 using namespace std;
 
@@ -19,10 +18,37 @@ std::string edge_string ("edge");
 std::string vertex_string ("vertex");
 std::string sensornode_string("sensornode");
 
-
-// Create an empty graph. This is needed due to the if statements that have nothing to do with 'if graph_string'.
-// For example, the 'if edge_string' does not know about graph g.
 Graph graph;
+
+bool validXmlVertex(pugi::xml_node& node) {
+    if (node.attribute("id") == NULL) {
+        return false;
+    }
+    return true;
+}
+
+bool validXmlSensornode(const pugi::xml_node& node) {
+    if (node.attribute("name") == NULL) {
+        return false;
+    }
+    if (node.attribute("room") == NULL) {
+        return false;
+    }
+    return true;
+}
+
+bool validXmlEdge(pugi::xml_node& node) {
+    if (node.attribute("id") == NULL) {
+        return false;
+    }
+    if (node.attribute("vertex1") == NULL) {
+        return false;
+    }
+    if (node.attribute("vertex2") == NULL) {
+        return false;
+    }
+    return true;
+}
 
 struct simple_walker: pugi::xml_tree_walker
 {
@@ -33,6 +59,14 @@ struct simple_walker: pugi::xml_tree_walker
     {
         if(vertex_string.compare(node.name()) == 0) {
             // If XML node is a vertex
+
+            if (!validXmlVertex(node)) {
+                throw InvalidXmlException("A vertex node in the XML file has an invalid format.");
+            }
+
+            if (!validXmlSensornode(node.first_child())) {
+                throw InvalidXmlException("A sensor node in the XML file has an invalid format.");
+            }
 
             Vertex<SensorNode>* vertex = new Vertex<SensorNode>();
             vertex->setId(node.attribute("id").as_int());
@@ -51,7 +85,9 @@ struct simple_walker: pugi::xml_tree_walker
         } else if(edge_string.compare(node.name()) == 0) {
             // If XML node is an edge
 
-            // Je kan de id uitlezen met 'node.attribute("id").as_int()'. Analoog kan je bv. vertex1 uitlezen met 'node.attribute("vertex1").as_int()'.
+            if (!validXmlEdge(node)) {
+                throw InvalidXmlException("An edge node in the XML file has an invalid format.");
+            }
 
             Edge* edge = new Edge();
             edge->setId(node.attribute("id").as_int());
@@ -78,85 +114,46 @@ struct simple_walker: pugi::xml_tree_walker
     }
 };
 
-
 int main()
 {
-    // Pugi::xml initialization
-    pugi::xml_document file;
-    file.load_file("../../data/graph.graphml");
+    try {
+        // Pugi::xml initialization
+        pugi::xml_document file;
+        file.load_file("../../data/graph.graphml");
 
 
-    // Make 'root' the root of the XML tree.
-    // 'child("graph")' returns the first node which has that name "graph".
-    pugi::xml_node root = file.child("graph"); // 'root' contains a list of graphs. But in reality, there is only one graph. Therefore, let's make this one graph the root.
-
-    
-    // Use 'tree_walker' to step through the .graphml file.
-    // Source: https://pugixml.org/docs/quickstart.html#access
-    simple_walker tree_walker;
-    file.traverse(tree_walker); // Start the XML tree traversal
-
-    // The graph data should now be present in memory in the form of your graph data structure.
+        // Make 'root' the root of the XML tree.
+        // 'child("graph")' returns the first node which has that name "graph".
+        pugi::xml_node root = file.child(
+                "graph"); // 'root' contains a list of graphs. But in reality, there is only one graph. Therefore, let's make this one graph the root.
 
 
-    //cout << "BFS result: " + to_string(bfs(&graph)) + endl;
+        // Use 'tree_walker' to step through the .graphml file.
+        // Source: https://pugixml.org/docs/quickstart.html#access
+        simple_walker tree_walker;
+        file.traverse(tree_walker); // Start the XML tree traversal
 
-    Vertex<SensorNode>* startVertex = nullptr;
-    for(Vertex<SensorNode>* vertex : graph.getVertices()) {
-        if (vertex->getSensorNode()->room == "E116") {
-            startVertex = vertex;
+        // The graph data should now be present in memory in the form of your graph data structure.
+
+        string startvertexroom = "E116";
+        Vertex<SensorNode> *startVertex = nullptr;
+        for (Vertex<SensorNode> *vertex: graph.getVertices()) {
+            if (vertex->getSensorNode()->room == startvertexroom) {
+                startVertex = vertex;
+            }
         }
+        if (startVertex == nullptr) {
+            throw InvalidStartVertexException("De startvertex met " + startvertexroom + " als room atribuut bestaat niet.");
+        }
+
+        list<Edge *> edges = graph.incidentEdges(startVertex);
+
+        bfs(&graph, startVertex);
+
+        return 0;
+
+    } catch (exception& e) {
+        cerr << e.what();
+        return 1;
     }
-
-    list<Edge*> edges = graph.incidentEdges(startVertex);
-
-    bfs(&graph, startVertex);
-
-
-    //for(Vertex* vertex : graph.getVertices()){
-    //    cout << vertex->getSensorNode()->name << endl;
-    //    cout << vertex->getSensorNode()->room << endl;
-    //    cout << vertex->getSensorNode()->temperature << endl;
-    //}
-
-
-    /*
-    Graph graph;
-    SensorNode sn1;
-    SensorNode sn2;
-    sn1.name = "Wout";
-    sn2.name = "Daan";
-    sn1.room = "E110";
-    sn2.room = "E220";
-    sn1.humidity = 0;
-    sn2.humidity = 0;
-    sn1.temperature = 0;
-    sn2.temperature = 0;
-    sn1.co2 = 0;
-    sn2.co2 = 0;
-
-
-    Vertex v1;
-    Vertex v2;
-    v1.setSensorNode(&sn1);
-    v2.setSensorNode(&sn2);
-    v1.setId(1);
-    v2.setId(2);
-
-    Edge edge;
-    edge.setVertex1(&v1);
-    edge.setVertex2(&v2);
-
-    graph.addEdgeToList(&edge);
-    graph.addVertexToList(&v1);
-    graph.addVertexToList(&v2);
-
-    cout << v1.getId() << endl;
-    cout << v2.getId() << endl;
-    cout << sn1.name << endl;
-    cout << sn2.name << endl;
-    */
-
-
-    return 0;
 }
