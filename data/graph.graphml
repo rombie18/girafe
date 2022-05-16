@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <graph id="g" edgedefault="undirected">
     <vertex id="1">
         <sensornode name="ESP32" room="P108Y"/>
