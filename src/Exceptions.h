@@ -35,5 +35,35 @@ struct InvalidXmlException : public exception {
     }
 };
 
+bool validXmlVertex(pugi::xml_node& node) {
+    if (node.attribute("id") == NULL) {
+        return false;
+    }
+    return true;
+}
+
+bool validXmlSensornode(const pugi::xml_node& node) {
+    if (node.attribute("name") == NULL) {
+        return false;
+    }
+    if (node.attribute("room") == NULL) {
+        return false;
+    }
+    return true;
+}
+
+bool validXmlEdge(pugi::xml_node& node) {
+    if (node.attribute("id") == NULL) {
+        return false;
+    }
+    if (node.attribute("vertex1") == NULL) {
+        return false;
+    }
+    if (node.attribute("vertex2") == NULL) {
+        return false;
+    }
+    return true;
+}
+
 
 #endif //MAIN_CPP_EXCEPTIONS_H

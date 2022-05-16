@@ -13,6 +13,8 @@ private:
     list<Vertex<SensorNode>*> vertexList;
 
 public:
+    Graph() {}
+    ~Graph() {}
     void addVertexToList(Vertex<SensorNode>* vertex);
     void addEdgeToList(Edge* edge);
     list<Edge*> getEdges();

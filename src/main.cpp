@@ -20,36 +20,6 @@ std::string sensornode_string("sensornode");
 
 Graph graph;
 
-bool validXmlVertex(pugi::xml_node& node) {
-    if (node.attribute("id") == NULL) {
-        return false;
-    }
-    return true;
-}
-
-bool validXmlSensornode(const pugi::xml_node& node) {
-    if (node.attribute("name") == NULL) {
-        return false;
-    }
-    if (node.attribute("room") == NULL) {
-        return false;
-    }
-    return true;
-}
-
-bool validXmlEdge(pugi::xml_node& node) {
-    if (node.attribute("id") == NULL) {
-        return false;
-    }
-    if (node.attribute("vertex1") == NULL) {
-        return false;
-    }
-    if (node.attribute("vertex2") == NULL) {
-        return false;
-    }
-    return true;
-}
-
 struct simple_walker: pugi::xml_tree_walker
 {
     // Depth-first traversal

@@ -12,6 +12,8 @@ class Vertex {
 
     public:
         Vertex();
+        ~Vertex();
+
         int getId();
         void setId(int id);
         T* getSensorNode();

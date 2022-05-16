@@ -10,6 +10,9 @@ class Edge {
     Vertex<SensorNode>* vertex2;
 
     public:
+    Edge() {}
+    ~Edge() {}
+
     int getId();
     Vertex<SensorNode>* getVertex1();
     Vertex<SensorNode>* getVertex2();
