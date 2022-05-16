@@ -15,4 +15,5 @@ add_executable(src
         Edge.h
         Graph.h
         Algorithm.h
+        Exceptions.h
         )
