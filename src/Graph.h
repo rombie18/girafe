@@ -1,7 +1,3 @@
-//
-// Created by woutr on 22/04/2022.
-//
-
 #include <list>
 #include "Edge.h"
 #include "Vertex.h"
