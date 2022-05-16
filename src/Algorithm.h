@@ -1,7 +1,3 @@
-//
-// Created by DaanJanssen on 10/05/2022.
-//
-
 #include <vector>
 #include <map>
 #include <algorithm>
