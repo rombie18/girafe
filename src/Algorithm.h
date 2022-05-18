@@ -9,12 +9,16 @@
 
 using namespace std;
 
+// Helper function to check if object is already present in list
 template <typename T>
 bool in_list(std::list<T> haystack, T needle) {
     return find(haystack.begin(), haystack.end(), needle) != haystack.end();
 }
 
-void bfs(Graph* graph, Vertex<SensorNode>* startVertex) {
+// Breadth First Search algorithm
+// Returns a map with vertices ordered by level
+// Eg. {0: ["E116"], 1: ["E110", "E117"], 2: ["E113", "E123", "E456"]}
+map<int, vector<Vertex<SensorNode>*>> bfs(Graph* graph, Vertex<SensorNode>* startVertex) {
 
     int level = 0;
 
@@ -26,8 +30,6 @@ void bfs(Graph* graph, Vertex<SensorNode>* startVertex) {
     vertices[level] = vector<Vertex<SensorNode>*>();
     vertices[level].push_back(startVertex);
 
-    cout << "Type of Edge:"<< endl;
-
     while (!vertices[level].empty()) {
         vertices[level+1] = vector<Vertex<SensorNode>*>();
         for(Vertex<SensorNode>* vertex : vertices[level]) {
@@ -37,10 +39,10 @@ void bfs(Graph* graph, Vertex<SensorNode>* startVertex) {
                     Vertex<SensorNode>* opposite = graph->opposite(vertex, edge);
                     if (!in_list(exploredVertices, opposite)) {
                         exploredVertices.push_back(opposite);
-                        cout << "  Discovery edge: " + to_string(edge->getId()) << endl;
                         vertices[level+1].push_back(opposite);
+                        //cout << "  Discovery edge: " + to_string(edge->getId()) << endl;
                     } else {
-                        cout << "  Cross edge: " + to_string(edge->getId()) << endl;
+                        //cout << "  Cross edge: " + to_string(edge->getId()) << endl;
                     }
                 }
             }
@@ -49,16 +51,7 @@ void bfs(Graph* graph, Vertex<SensorNode>* startVertex) {
     }
     vertices.erase(level);
 
-    cout << endl;
-    cout << "Levels:"<< endl;
-
-    map<int, vector<Vertex<SensorNode>*>>::iterator i;
-    for(i = vertices.begin(); i != vertices.end(); i++) {
-        cout << "  Level " + to_string(i->first) + ":"<< endl;
-        for(Vertex<SensorNode>* vertex : i->second) {
-            cout << "    Vertex " + to_string(vertex->getId()) + ": " + vertex->getSensorNode()->room << endl;
-        }
-    }
+    return vertices;
 }
 
 #endif //MAIN_CPP_ALGORITHM_H

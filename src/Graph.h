@@ -26,36 +26,29 @@ public:
 };
 
 //Herinner dat de variabele ‘vertexList’ een STLlist is die pointers naar alle vertices bevat.
-//De functie voegt dus een pointer naar een
-//vertex toe aan de variabele ‘vertexList’.
+//De functie voegt dus een pointer naar een vertex toe aan de variabele ‘vertexList’.
 void Graph::addVertexToList(Vertex<SensorNode>* vertex) {
     vertexList.push_front(vertex);
 }
 
-//Herinner dat de variabele ‘edgeList’ een STL-list
-//is die pointers naar alle edges bevat.
-//Voegt een pointer naar een edge toe aan de
-//variabele ‘edgeList’.
+//Herinner dat de variabele ‘edgeList’ een STL-list is die pointers naar alle edges bevat.
+//Voegt een pointer naar een edge toe aan de variabele ‘edgeList’.
 void Graph::addEdgeToList(Edge* edge) {
     edgeList.push_front(edge);
 }
 
-//Geeft een STL-list met pointers naar de edges
-//van de grafe
+//Geeft een STL-list met pointers naar de edges van de grafe
 list<Edge*> Graph::getEdges() {
     return edgeList;
 }
 
-//Geeft een STL-list met pointers naar de vertices
-//van de grafe
+//Geeft een STL-list met pointers naar de vertices van de grafe
 list<Vertex<SensorNode>*> Graph::getVertices() {
     return vertexList;
 }
 
-//De ‘incident edges’ van een vertex zijn alle
-//edges die vertrekken/aankomen in deze vertex.
-//De functie ‘incidentEdges’ geeft daarom een
-//lijst met deze edges voor een gegeven vertex.
+//De ‘incident edges’ van een vertex zijn alle edges die vertrekken/aankomen in deze vertex.
+//De functie ‘incidentEdges’ geeft daarom een lijst met deze edges voor een gegeven vertex.
 list<Edge*> Graph::incidentEdges(Vertex<SensorNode>* vertex) {
     list<Edge*> incidentEdges = {};
     for(Edge* edge : edgeList) {
@@ -71,11 +64,8 @@ list<Edge*> Graph::incidentEdges(Vertex<SensorNode>* vertex) {
 
 }
 
-//De ‘adjacent vertices’ van een vertex zijn alle
-//vertices die een edge (link) delen met de
-//gegeven vertex. De functie ‘adjacentVertices’
-//geeft daarom een lijst met deze vertices voor
-//een gegeven vertex.
+//De ‘adjacent vertices’ van een vertex zijn alle vertices die een edge (link) delen met de gegeven vertex.
+//De functie ‘adjacentVertices’ geeft daarom een lijst met deze vertices voor een gegeven vertex.
 list<Vertex<SensorNode>*> Graph::adjecentVertices(Vertex<SensorNode>* vertex) {
     list<Vertex<SensorNode>*> vertices;
     for(Edge* edge : edgeList) {
@@ -88,8 +78,7 @@ list<Vertex<SensorNode>*> Graph::adjecentVertices(Vertex<SensorNode>* vertex) {
 }
 
 //Geeft een Booleaanse waarde die zegt of twee
-//vertices naast mekaar liggen (= rechtstreeks
-//met mekaar verbonden door edge).
+//vertices naast mekaar liggen (= rechtstreeks met mekaar verbonden door edge).
 bool Graph::areAdjecent(Vertex<SensorNode>* vertex1, Vertex<SensorNode>* vertex2) {
     for(Edge* edge : edgeList) {
         if (edge->getVertex1() == vertex2 && edge->getVertex2() == vertex1) {
@@ -102,10 +91,8 @@ bool Graph::areAdjecent(Vertex<SensorNode>* vertex1, Vertex<SensorNode>* vertex2
     return false;
 }
 
-//Geeft de vertex aan de overkant voor een
-//gegeven vertex en edge. Dus als één van de
-//twee uiteindes (vertices) gekend is, verkrijg je
-//met deze functie de andere vertex
+//Geeft de vertex aan de overkant voor een gegeven vertex en edge.
+//Dus als één van detwee uiteindes (vertices) gekend is, verkrijg je met deze functie de andere vertex
 Vertex<SensorNode>* Graph::opposite(Vertex<SensorNode>* vertex, Edge* edge) {
     if (edge->getVertex1() == vertex) {
         return edge->getVertex2();

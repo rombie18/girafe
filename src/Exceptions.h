@@ -1,12 +1,9 @@
-//
-// Created by DaanJanssen on 16/05/2022.
-//
-
 #ifndef MAIN_CPP_EXCEPTIONS_H
 #define MAIN_CPP_EXCEPTIONS_H
 
 using namespace std;
 
+// Custom exceptions for error handling
 struct InvalidStartVertexException : public exception {
     string message;
 
@@ -35,7 +32,8 @@ struct InvalidXmlException : public exception {
     }
 };
 
-bool validXmlVertex(pugi::xml_node& node) {
+// XML validator functions
+bool validXmlVertex(const pugi::xml_node& node) {
     if (node.attribute("id") == NULL) {
         return false;
     }
@@ -52,7 +50,7 @@ bool validXmlSensornode(const pugi::xml_node& node) {
     return true;
 }
 
-bool validXmlEdge(pugi::xml_node& node) {
+bool validXmlEdge(const pugi::xml_node& node) {
     if (node.attribute("id") == NULL) {
         return false;
     }
